@@ -99,10 +99,8 @@ def sim_pearson(prefs, p1, p2):
             pSum += prefs[p2][key] * prefs[p1][key]
 
     # Calculate Pearson score
-    num = (pSum/n) - (1.0 * sum1 * sum2 / pow(n, 2))
-
-    den = sqrt(((sum1Sq / n) - float(pow(sum1, 2)) / float(pow(n, 2))) *
-               ((sum2Sq / n) - float(pow(sum2, 2)) / float(pow(n, 2))))
+    num = float(pSum - ((sum1 * sum2) / n))
+    den = sqrt((sum1Sq - pow(sum1,2)/n) * (sum2Sq - pow(sum2, 2)/n))
     if den == 0:
         return 0
 
