@@ -105,8 +105,23 @@ def sim_pearson(prefs, p1, p2):
         return 0
 
     r = num / den
-
     return r
+
+def sim_tanimoto(prefs, p1, p2):
+    '''
+    Tanimoto similarity (Jaccard Index)
+    (assume p1 and p2 exist)
+    '''
+    p1Vector = {x for x in prefs[p1].keys()}
+    p2Vector = {x for x in prefs[p2].keys()}
+
+    # Compare (p1 intersect p2)/(p1 union p2)
+    intersection = float(len(p1Vector.intersection(p2Vector)))
+    union = float(len(p1Vector.union(p2Vector)))
+    if union == 0:
+        return 0
+
+    return intersection / union
 
 def topMatches(
     prefs,
