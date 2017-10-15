@@ -1,6 +1,5 @@
 import feedparser
 import re
-import nltk
 
 def getwordcounts(url):
     '''
@@ -32,7 +31,8 @@ def getwords(html):
     txt = re.compile(r'<[^>]+>').sub('', html)
 
     # Split words by all non-alpha characters
-    words = nltk.word_tokenize(txt)
+    rgx = re.compile("(\w[\w']*\w|\w)")
+    words = rgx.findall(txt)
 
     # Convert to lowercase
     return [word.lower() for word in words if word != '']
@@ -40,7 +40,7 @@ def getwords(html):
 
 apcount = {}
 wordcounts = {}
-feedlist = [line for line in open('feedlist.txt', encoding='utf-8')]
+feedlist = [line for line in open('dsfeedlist.txt', encoding='utf-8')]
 for feedurl in feedlist:
    try:
         (title, wc) = getwordcounts(feedurl)
@@ -58,8 +58,8 @@ for (w, bc) in apcount.items():
     frac = float(bc) / len(feedlist)
     if frac > 0.1 and frac < 0.5:
         wordlist.append(w)
-
-out = open('blogdata.txt', 'w', encoding='utf-8')
+wordlist.sort()
+out = open('dsdata.txt', 'w', encoding='utf-8')
 out.write('Blog')
 for word in wordlist:
     out.write('\t%s' % word)
